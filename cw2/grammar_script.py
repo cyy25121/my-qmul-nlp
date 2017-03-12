@@ -42,6 +42,7 @@ Pronoun -> 'I' | 'she' | 'me'
 Proper-Noun -> 'Houston' | 'NWA' | 'sf'
 Aux -> 'does'
 Preposition -> 'from' | 'to' | 'on' | 'near' | 'through'
+NP -> NP PP
 """)
 # here we let nltk construct a chart parser from our grammar
 parser = nltk.ChartParser(grammar)
@@ -56,6 +57,7 @@ def allParses(sentenceList):
 def printParses(parses):
 	for tree in parses:
 		print(tree)
+		tree.draw()
 
 # input: a sentence as a string or as a list of words
 # prints a sentence, then parses it and prints all the parse trees
