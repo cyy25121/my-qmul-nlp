@@ -1,0 +1,61 @@
+## Simple grammar with First Order Logic and event-based LFs
+## 
+## Based on Natural Language Toolkit: sem3.fcfg
+## Author: Ewan Klein <ewan@inf.ed.ac.uk> 
+## URL: <http://nltk.sourceforge.net>
+## For license information, see LICENSE.TXT
+
+
+% start S
+############################
+# Grammar Rules
+#############################
+
+# S: type t
+S[SEM = <exists e.?vp(e)>] -> VP[SEM=?vp]
+
+# VBar: type <e,<e,t>>
+VBar[SEM = <?v(?np)>] -> V[SEM=?v] NP[SEM=?np]
+
+# VP: type <e,t>
+VP[SEM = <\e.?np(?vb(e))>] -> VBar[SEM=?vb] NP[SEM=?np]
+VP[SEM = <?pp(?vp)>] -> VP[SEM=?vp] PP[SEM=?pp]
+
+# NP: type <?,?>
+NP[SEM=?p] -> Pro[SEM=?p]
+NP[SEM=?pn] -> PN[SEM=?pn]
+NP[SEM=<?det(?nom)> ] -> Det[SEM=?det]  Nom[SEM=?nom]
+
+# Nom: type <e,t>
+Nom[SEM=?n] -> N[SEM=?n]
+Nom[SEM=<?pp(?nom)>] -> Nom[SEM=?nom] PP[SEM=?pp]
+
+# PP: type <<e,t>,<e,t>>
+PP[SEM=<?p(?np)>] -> Prep[SEM=?p] NP[SEM=?np]
+
+#############################
+# Lexical Rules
+#############################
+
+# Pronouns: type <<e,t>,t>
+Pro[SEM=<\P.P(me)>] -> 'me'
+
+# Proper nouns: type <<e,t>,t>
+PN[SEM=<\P.P(phoenix)>] -> 'Phoenix'
+
+# Determiners: type <<e,t>,<<e,t>,t>>
+Det[SEM=<\P Q.forall x.(P(x) -> Q(x))>] -> 'the'
+Det[SEM=<\P Q.exists x.(P(x) & Q(x))>] -> 'some'
+
+# Nouns: type <?,?>
+N[SEM=<???>] -> 'flights'
+N[SEM=<???>] -> 'meals'
+
+# Verbs: type <<<e,t>,t>,<e,<e,t>>>
+V[SEM=<\P.P(???)>] -> 'show'
+
+# Prepositions: type <<<e,t>,t>,<<e,t>,<e,t>>>
+Prep[SEM=<\Q P x.(P(x) & Q(\y.on(x,y)))>] -> 'on'
+Prep[SEM=<\Q P x.(P(x) & Q(\y.to(x,y)))>] -> 'to'
+Prep[SEM=<\Q P x.(P(x) & Q(\y.from(x,y)))>] -> 'from'
+

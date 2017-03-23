@@ -1,0 +1,61 @@
+## Simple grammar with underspecified quantifiers, event-based LFs
+## 
+## Based on Natural Language Toolkit: sem3.fcfg
+## Author: Ewan Klein <ewan@inf.ed.ac.uk> 
+## URL: <http://nltk.sourceforge.net>
+## For license information, see LICENSE.TXT
+
+
+% start S
+############################
+# Grammar Rules
+#############################
+
+# S: type t
+S[SEM = <event(e,?vp(e))>] -> VP[SEM=?vp]
+
+# VBar: type <e,<e,t>>
+VBar[SEM = <?v(?np)>] -> V[SEM=?v] NP[SEM=?np]
+
+# VP: type <e,t>
+VP[SEM = <?vb(?np)>] -> VBar[SEM=?vb] NP[SEM=?np]
+VP[SEM = <?pp(?vp)>] -> VP[SEM=?vp] PP[SEM=?pp]
+
+# NP: type e
+NP[SEM=?p] -> Pro[SEM=?p]
+NP[SEM=?pn] -> PN[SEM=?pn]
+NP[SEM=<?det(?nom)> ] -> Det[SEM=?det]  Nom[SEM=?nom]
+
+# Nom: type <e,t>
+Nom[SEM=?n] -> N[SEM=?n]
+Nom[SEM=<?pp(?nom)>] -> Nom[SEM=?nom] PP[SEM=?pp]
+
+# PP: type <<e,t>,<e,t>>
+PP[SEM=<?p(?np)>] -> Prep[SEM=?p] NP[SEM=?np]
+
+#############################
+# Lexical Rules
+#############################
+
+# Pronouns: type e
+Pro[SEM=<me>] -> 'me'
+
+# Proper nouns: type e
+PN[SEM=<phoenix>] -> 'Phoenix'
+
+# Determiners: type <<e,t>,e>
+Det[SEM=<\P.the(x,P(x))>] -> 'the'
+Det[SEM=<\P.som(x,P(x))>] -> 'some'
+
+# Nouns: type <?,?>
+N[SEM=<???>] -> 'flights'
+N[SEM=<???>] -> 'meals'
+
+# Verbs: type <e,<e,<e,t>>> - argument order = subject, object, event
+V[SEM=<???>] -> 'show'
+
+# Prepositions: type <e,<<e,t>,<e,t>>>
+Prep[SEM=<\y P x.(P(x) & on(x,y))>] -> 'on'
+Prep[SEM=<\y P x.(P(x) & to(x,y))>] -> 'to'
+Prep[SEM=<\y P x.(P(x) & from(x,y))>] -> 'from'
+
