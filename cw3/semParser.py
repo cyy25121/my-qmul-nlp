@@ -9,7 +9,7 @@ def semParse(sentence):
     print "Parsing \"" + sentence + "\":"
     tree_generator = parser.parse(sentence.split())
     for tree in tree_generator: 
-        print "  type:", tree.label()['SEM'].type
+        #print "  type:", tree.label()['SEM'].type
         print "    LF:", tree.label()['SEM']
         # for subtree in tree.subtrees():
         #     print subtree.label()['SEM'].type, subtree.label()['SEM']

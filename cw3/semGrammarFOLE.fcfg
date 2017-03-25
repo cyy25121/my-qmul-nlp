@@ -48,8 +48,8 @@ Det[SEM=<\P Q.forall x.(P(x) -> Q(x))>] -> 'the'
 Det[SEM=<\P Q.exists x.(P(x) & Q(x))>] -> 'some'
 
 # Nouns: type <?,?>
-N[SEM=<???>] -> 'flights'
-N[SEM=<???>] -> 'meals'
+N[SEM=<\x.flight(x)>] -> 'flights'
+N[SEM=<\x.meals(x)>] -> 'meals'
 
 # Verbs: type <<<e,t>,t>,<e,<e,t>>>
 V[SEM=<\P.P(???)>] -> 'show'

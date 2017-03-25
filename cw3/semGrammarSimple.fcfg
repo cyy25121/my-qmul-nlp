@@ -48,11 +48,11 @@ Det[SEM=<\P.the(x,P(x))>] -> 'the'
 Det[SEM=<\P.som(x,P(x))>] -> 'some'
 
 # Nouns: type <?,?>
-N[SEM=<???>] -> 'flights'
-N[SEM=<???>] -> 'meals'
+N[SEM=<\x.flights(x)>] -> 'flights'
+N[SEM=<\x.meals(x)>] -> 'meals'
 
 # Verbs: type <e,<e,<e,t>>> - argument order = subject, object, event
-V[SEM=<???>] -> 'show'
+V[SEM=<\y\z\x.show(x,y,z)>] -> 'show'
 
 # Prepositions: type <e,<<e,t>,<e,t>>>
 Prep[SEM=<\y P x.(P(x) & on(x,y))>] -> 'on'
